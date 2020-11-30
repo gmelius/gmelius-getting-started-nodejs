@@ -1,0 +1,18 @@
+doctype html
+html(lang="en")
+  head
+    title Gmelius board example
+    meta(charset='utf-8')
+    link(rel="stylesheet", href="/static/main.css")
+  body
+    p Gmelius board: #{board.board_name}.
+    table(style='width:100%', border='1')
+      thead
+        tr
+          each column in columns
+            td= column.column_name
+      tbody
+        each row in cards
+          tr
+            each card in row
+              td= card

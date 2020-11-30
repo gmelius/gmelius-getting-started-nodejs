@@ -1,0 +1,20 @@
+{
+  "name": "gmelius-getting-started-nodejs",
+  "version": "1.0.0",
+  "description": "Getting started with Gmelius API",
+  "main": "index.js",
+  "scripts": {
+    "start": "node app.js"
+  },
+  "dependencies": {
+    "base64url": "^3.0.1",
+    "express": "^4.16.4",
+    "node-fetch": "^2.6.1",
+    "pug": "^3.0.0"
+  },
+  "author": "Gmelius",
+  "license": "MIT",
+  "devDependencies": {
+    "dotenv": "^8.2.0"
+  }
+}
