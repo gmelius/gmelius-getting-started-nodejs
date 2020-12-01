@@ -8,7 +8,7 @@ This small application performs OAuth 2.0 authentication and then displays a Gme
 ## Prerequisites
 
 ### Fill in environment variables
-Get your [API credentials](https://gmelius.io/account/app) and store them in a `.env` file:
+Get your [API credentials](https://gmelius.io/account/api) and store them in a `.env` file:
 
 ```bash
 CLIENT_ID=
