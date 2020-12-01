@@ -17,7 +17,7 @@ CLIENT_SECRET=
 
 ### Configure your access to Gmelius API
 
-Configure your [access to Gmelius API](https://gmelius.io/account/app) -> change to account/api:
+Configure your [access to Gmelius API](https://gmelius.io/account/api) -> change to account/api:
 
 - add the following redirect_uri : http://localhost:8080/callback
 - add the following scope : https://api.gmelius.com/public/auth/boards/read
