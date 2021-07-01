@@ -3,7 +3,7 @@ const fetch = require('node-fetch');
 const CLIENT_ID = process.env.CLIENT_ID;
 const CLIENT_SECRET = process.env.CLIENT_SECRET;
 const PORT = process.env.PORT || 8080;
-const REDIRECT_URI = `http://localhost:${PORT}/callback`;
+const REDIRECT_URI = `https://localhost:${PORT}/callback`;
 const SCOPE = 'offline_access;https://api.gmelius.com/public/auth/boards/read';
 
 const AUTHORIZE_URL = 'https://gmelius.io/oauth/authorize';

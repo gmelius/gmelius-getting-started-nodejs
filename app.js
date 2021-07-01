@@ -4,7 +4,10 @@ if (process.env.NODE_ENV !== 'production') {
 const board = require('./utils/board');
 const authentication = require('./utils/authentication');
 const generators = require('./utils/generators');
+const fs = require('fs')
+const https = require('https')
 const express = require('express');
+
 
 // express
 const app = express();
@@ -52,9 +55,12 @@ app.get('/board', (request, response) => {
 
 // Start the server
 const PORT = process.env.PORT || 8080;
-app.listen(PORT, () => {
+https.createServer({
+  key: fs.readFileSync('server.key'),
+  cert: fs.readFileSync('server.cert')
+}, app).listen(PORT, () => {
   console.log(`App listening on port ${PORT}`);
   console.log('Press Ctrl+C to quit.');
-});
+})
 
 module.exports = app;
