@@ -15,11 +15,21 @@ CLIENT_ID=
 CLIENT_SECRET=
 ```
 
+### Configure the local https server
+The project runs in https. It indeed implements the authorization code flow on Gmelius API which needs an https redirect URI. So generate a required self-signed certificate by running the following command in the project directory - this will create two files `server.cert` and `server.key`.
+```bash
+openssl req -nodes -new -x509 -keyout server.key -out server.cert
+```
+Most fields may be left to default but be careful to set this to localhost:
+```
+Common Name (e.g. server FQDN or YOUR name) []: localhost
+```
+
 ### Configure your access to Gmelius API
 
 Configure your [access to Gmelius API](https://gmelius.io/account/api) -> change to account/api:
 
-- add the following redirect_uri : http://localhost:8080/callback
+- add the following redirect_uri : https://localhost:8080/callback
 - add the following scope : https://api.gmelius.com/public/auth/boards/read
 
 ## Refinements
@@ -65,3 +75,5 @@ https://glitch.com/edit/#!/trello-oauth
 https://github.com/panva/node-openid-client/
 
 https://github.com/GoogleCloudPlatform/nodejs-docs-samples/tree/master/appengine/static-files
+
+https://flaviocopes.com/express-https-self-signed-certificate/
