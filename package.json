@@ -9,6 +9,7 @@
   "dependencies": {
     "base64url": "^3.0.1",
     "express": "^4.16.4",
+    "lodash.escape": "^4.0.1",
     "node-fetch": "^2.6.7",
     "pug": "^3.0.0"
   },
