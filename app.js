@@ -4,13 +4,21 @@ if (process.env.NODE_ENV !== 'production') {
 const board = require('./utils/board');
 const authentication = require('./utils/authentication');
 const generators = require('./utils/generators');
-const fs = require('fs')
-const https = require('https')
+const fs = require('fs');
+const escape = require('lodash.escape');
+const https = require('https');
 const express = require('express');
-
+const helmet = require('helmet');
+const csrf = require('csurf');
+const cookieParser = require('cookie-parser')
 
 // express
 const app = express();
+const csrfProtection = csrf({ cookie: true });
+
+app.use(helmet());
+app.use(cookieParser())
+
 app.set('view engine', 'pug');
 app.use('/static', express.static('public')); // for serving static files from './public'
 
@@ -21,12 +29,12 @@ let CODE_VERIFIER;
 let ACCESS_TOKEN;
 
 // auth routes
-app.get("/", function (request, response) {
+app.get("/", csrfProtection, function (request, response) {
   console.log(`GET '/' 🤠 ${Date()}`);
   return response.send("<h1>Oh, hello there!</h1><a href='./login'>Login!</a>");
 });
 
-app.get("/login", function (request, response) {
+app.get("/login", csrfProtection, function (request, response) {
   console.log(`GET '/login' 🤠 ${Date()}`);
   CODE_VERIFIER = generators.codeVerifier(); // generate random value
   const codeChallenge = generators.codeChallenge(CODE_VERIFIER);
@@ -35,21 +43,29 @@ app.get("/login", function (request, response) {
 });
 
 
-app.get("/callback", function (request, response) {
+app.get("/callback", csrfProtection, function (request, response) {
   console.log(`GET '/callback' 🤠 ${Date()}`);
   const { code } = request.query;
   return authentication.getCallback(code, CODE_VERIFIER)
     .then(json => { ACCESS_TOKEN = json.access_token; return json; })
-    .then(json => json.error ? response.send(json.error) : response.redirect('/board'))
-    .catch(error => { console.log('error', error); response.send(error.message); });
+    .then(json => json.error ? response.send(escape(json.error)) : response.redirect('/board'))
+    .catch(error => {
+      console.log('error', error);
+      const escapedMessage = escape(error.message);
+      response.send(escapedMessage);
+    });
 })
 
 // board route
-app.get('/board', (request, response) => {
+app.get('/board', csrfProtection, (request, response) => {
   console.log(`GET '/board' 🤠 ${Date()}`);
   return board.getBoard(ACCESS_TOKEN)
     .then(({ board, columns, cards }) => response.render('board', { board, columns, cards }))
-    .catch(error => { console.log('error', error); response.send(error.message); });
+    .catch(error => {
+      console.log('error', error);
+      const escapedMessage = escape(error.message);
+      response.send(escapedMessage);
+    });
 });
 
 
