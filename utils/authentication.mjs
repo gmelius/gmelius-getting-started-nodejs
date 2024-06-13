@@ -1,4 +1,4 @@
-const fetch = require('node-fetch');
+import fetch from 'node-fetch';
 
 const CLIENT_ID = process.env.CLIENT_ID;
 const CLIENT_SECRET = process.env.CLIENT_SECRET;
@@ -39,7 +39,7 @@ function fetchResource (accessToken, route) {
     .then(json => json.data);
 }
 
-module.exports = {
+export default {
   getCallback,
   getLogin,
   fetchResource

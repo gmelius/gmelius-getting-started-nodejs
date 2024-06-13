@@ -1,13 +1,13 @@
-const { fetchResource } = require('./authentication');
+import authentication from './authentication.mjs';
 
 async function getBoard (accessToken) {
-  const boards = await fetchResource(accessToken, '/public/v1/auth/boards');
+  const boards = await authentication.fetchResource(accessToken, '/public/v1/auth/boards');
   if (boards.length === 0) throw new Error('User has no board');
   
   const board = boards[0]; // display first board
-  const columns = await fetchResource(accessToken, `/public/v1/auth/boards/${board.kanban_board_id}/columns`);
+  const columns = await authentication.fetchResource(accessToken, `/public/v1/auth/boards/${board.kanban_board_id}/columns`);
   const cardLists = await Promise.all(columns.map((column) => {
-    return fetchResource(accessToken, `/public/v1/auth/boards/columns/${column.column_id}/cards`).then(data => data.list);
+    return authentication.fetchResource(accessToken, `/public/v1/auth/boards/columns/${column.column_id}/cards`).then(data => data.list);
   }));
   const cards = format(cardLists)
   return { board, columns, cards };
@@ -33,6 +33,4 @@ function format (cardsLists) {
   return matrix;
 }
 
-module.exports = {
-  getBoard
-};
+export default { getBoard };

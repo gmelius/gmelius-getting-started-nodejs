@@ -1,16 +1,16 @@
-if (process.env.NODE_ENV !== 'production') {
-  require('dotenv').config();
-}
-const board = require('./utils/board');
-const authentication = require('./utils/authentication');
-const generators = require('./utils/generators');
-const fs = require('fs');
-const escape = require('lodash.escape');
-const https = require('https');
-const express = require('express');
-const helmet = require('helmet');
-const csrf = require('csurf');
-const cookieParser = require('cookie-parser')
+// if (process.env.NODE_ENV !== 'production') 
+import 'dotenv/config';
+
+import board from './utils/board.mjs';
+import authentication from './utils/authentication.mjs';
+import generators from './utils/generators.mjs';
+import fs from 'fs';
+import escape from 'lodash.escape';
+import https from 'https';
+import express from 'express';
+import helmet from 'helmet';
+import csrf from 'csurf';
+import cookieParser from 'cookie-parser';
 
 // express
 const app = express();
@@ -79,4 +79,4 @@ https.createServer({
   console.log('Press Ctrl+C to quit.');
 })
 
-module.exports = app;
+export default app;
